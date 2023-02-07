@@ -70,13 +70,11 @@ class AHT10:
             return False
         return True
 
-    @property
     def status(self):
         """The status byte initially returned from the sensor, see datasheet for details"""
         self._read_to_buffer()
         return self._buf[0]
 
-    @property
     def relative_humidity(self):
         """The measured relative humidity in percent."""
         self._perform_measurement()
@@ -86,7 +84,6 @@ class AHT10:
         self._humidity = (self._humidity * 100) / 0x100000
         return self._humidity
 
-    @property
     def temperature(self):
         """The measured temperature in degrees Celcius."""
         self._perform_measurement()
