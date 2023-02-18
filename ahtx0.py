@@ -66,7 +66,7 @@ class AHT10:
         self._buf[2] = 0x00
         self._i2c.writeto(self._address, self._buf[0:3])
         self._wait_for_idle()
-        if not self.status & self.AHTX0_STATUS_CALIBRATED:
+        if not self.status() and self.AHTX0_STATUS_CALIBRATED:
             return False
         return True
 
@@ -104,7 +104,7 @@ class AHT10:
 
     def _wait_for_idle(self):
         """Wait until sensor can receive a new command"""
-        while self.status & self.AHTX0_STATUS_BUSY:
+        while self.status() & self.AHTX0_STATUS_BUSY:
             utime.sleep_ms(5)
 
     def _perform_measurement(self):
@@ -116,3 +116,4 @@ class AHT10:
 
 class AHT20(AHT10):
     AHTX0_CMD_INITIALIZE = 0xBE  # Calibration command
+
